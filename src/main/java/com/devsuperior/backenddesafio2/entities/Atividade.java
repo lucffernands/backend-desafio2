@@ -1,11 +1,33 @@
 package com.devsuperior.backenddesafio2.entities;
 
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "tb_atividade")
 public class Atividade {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
     private String descricao;
     private Double preco;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
+    @ManyToMany
+    @JoinTable(name = "tb_atividade_participante",
+            joinColumns = @JoinColumn(name = "atividade_id"),
+             inverseJoinColumns = @JoinColumn(name = "particiante_id"))
+    private Set<Participante> participantes = new HashSet<>();
+
+    @OneToOne(mappedBy = "atividade", cascade = CascadeType.ALL)
+    private Bloco bloco;
 
     public Atividade() {
     }
@@ -47,5 +69,26 @@ public class Atividade {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Set<Participante> getParticipantes() {
+        return participantes;
+    }
+
+
+    public Bloco getBloco() {
+        return bloco;
+    }
+
+    public void setBloco(Bloco bloco) {
+        this.bloco = bloco;
     }
 }
