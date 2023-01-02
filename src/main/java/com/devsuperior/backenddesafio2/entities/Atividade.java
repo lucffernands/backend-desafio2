@@ -2,7 +2,9 @@ package com.devsuperior.backenddesafio2.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,11 +25,11 @@ public class Atividade {
     @ManyToMany
     @JoinTable(name = "tb_atividade_participante",
             joinColumns = @JoinColumn(name = "atividade_id"),
-             inverseJoinColumns = @JoinColumn(name = "particiante_id"))
+             inverseJoinColumns = @JoinColumn(name = "participante_id"))
     private Set<Participante> participantes = new HashSet<>();
 
-    @OneToOne(mappedBy = "atividade", cascade = CascadeType.ALL)
-    private Bloco bloco;
+    @OneToMany(mappedBy = "atividade")
+    private List<Bloco> blocos = new ArrayList<>();
 
     public Atividade() {
     }
@@ -83,12 +85,7 @@ public class Atividade {
         return participantes;
     }
 
-
-    public Bloco getBloco() {
-        return bloco;
-    }
-
-    public void setBloco(Bloco bloco) {
-        this.bloco = bloco;
+    public List<Bloco> getBlocos() {
+        return blocos;
     }
 }
