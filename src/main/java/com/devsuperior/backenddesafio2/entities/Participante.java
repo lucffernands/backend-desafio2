@@ -2,8 +2,9 @@ package com.devsuperior.backenddesafio2.entities;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "tb_participante")
@@ -17,7 +18,7 @@ public class Participante {
     private String email;
 
     @ManyToMany(mappedBy = "participantes")
-    private Set<Atividade> atividades = new HashSet<>();
+    private List<Atividade> atividades = new ArrayList<>();
 
     public Participante() {
     }
@@ -52,7 +53,7 @@ public class Participante {
         this.email = email;
     }
 
-    public Set<Atividade> getAtividades() {
+    public List<Atividade> getAtividades() {
         return atividades;
     }
 }
